@@ -1,0 +1,14 @@
+a:link{
+    color: black;
+}
+a:visited{
+    color: darkred;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: lightsteelblue;
+}
+
+*{
+  font: Sans-serif;
+}
