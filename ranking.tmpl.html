@@ -19,7 +19,9 @@
 <body>
 
 <div class="container">
-    <center><h4>{{header.title}}</h4></center>
+    <center><h4>
+        <a href="{{header.link}}" target="_blank"><font color="black">{{header.title}}</font></a>
+    </h4></center>
     <table class="table table-striped table-hover">
         {% for video in ranking %}
         <tr>
@@ -47,6 +49,5 @@
     });
   });
 }).apply(this);
-
 </script>
 </html>
