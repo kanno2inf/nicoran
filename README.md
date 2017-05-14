@@ -7,7 +7,7 @@ Please install python.
 
 This script needs these modules.
 ```
-# pip install requests beautifulsoup4 jinja4
+# pip install feedparser beautifulsoup4 jinja4
 ```
 
 ## Usage
