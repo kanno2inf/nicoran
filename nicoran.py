@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 import codecs
+import sys
 import time
 from argparse import ArgumentParser
 
@@ -10,7 +11,8 @@ from jinja2 import Environment, FileSystemLoader
 
 
 def rss_url(type):
-    return u'http://www.nicovideo.jp/ranking/fav/{0}/all?rss=2.0&lang=ja-jp'.format(type)
+    # dwango reference: https://dwango.github.io/niconico/genre_ranking/ranking_rss/
+    return u'http://www.nicovideo.jp/ranking/genre/all?term={0}&rss=2.0&lang=ja-jp'.format(type)
 
 
 def write_file(path, text=u''):
@@ -57,13 +59,13 @@ def make_ranking_html(header, ranking):
     return html
 
 
-if __name__ == '__main__':
-    RANKING_TYPE = ['hourly', 'daily', 'weekly', 'monthly', 'total']
+def main(argv):
+    RANKING_TYPE = ['hour', '24h', 'week', 'month', 'total']
 
     parser = ArgumentParser()
+    parser.add_argument('type', metavar='TYPE', choices=RANKING_TYPE, help=u'Ranking type')
     parser.add_argument('-o', '--output', metavar='OUTPUT_PATH', required=False, help=u'Output file path')
-    parser.add_argument('type', metavar='TYPE', choices=RANKING_TYPE, help=u'ranking type')
-    opt = parser.parse_args()
+    opt = parser.parse_args(argv)
 
     rss = feedparser.parse(rss_url(opt.type))
     header, ranking = parse_nicoranking_feed(rss)
@@ -72,5 +74,9 @@ if __name__ == '__main__':
     html = make_ranking_html(header, ranking)
     if opt.output:
         write_file(opt.output, html)
-    else:
-        print html
+        return
+    print(html)
+
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
